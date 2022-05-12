@@ -1,6 +1,9 @@
 package br.edu.univas.main;
 
-import br.edu.univas.vo.Disciplina;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class StartApp {
 	
@@ -8,7 +11,7 @@ public class StartApp {
 	
 	/*
 	Estudar:
-		CSV
+		CSV File 
 		Variável de Ambiente
 	*/
 	
@@ -20,10 +23,10 @@ public class StartApp {
 		CSV_FILE.
 	Seu programa deverá apresentar um menu como esse exemplo abaixo:
 		:::CHAMADA:::
-		1 – Disciplina A
-		2 – Disciplina B
-		3 – Disciplina C
-		9 – Sair
+		1 - Disciplina A
+		2 - Disciplina B
+		3 - Disciplina C
+		9 - Sair
 	Quando o usuário selecionar a disciplina, ele deverá escrever o nome dos alunos presentes. Seu programa 
 		deverá salvar o arquivo,no mesmo diretório que ele leu o arquivo CSV, utilizando o seguinte formato:
 			disciplina_a_dd_mm_yyyy.txt
@@ -39,10 +42,35 @@ public class StartApp {
 	*/
 	
 	public static void main(String[] args) {
-		// TODO
-		printMenu();
+		String path = "C:\\Users\\labunivas06\\Desktop\\MatR - P3\\students.csv";
+		String line = "";
+		BufferedReader reader = null;
+		
+		try {
+			reader = new BufferedReader(new FileReader(path));
+			while((line = reader.readLine()) != null) {
+				
+				String[] row = line.split(",");
+				
+				for(String index : row) {
+					System.out.printf("%-10s", index);
+				}
+				System.out.println();
+			}
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
+	
 
 	private static void printMenu() {
 		// TODO
